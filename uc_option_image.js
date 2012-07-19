@@ -34,7 +34,8 @@ UCOI.switchImage = function(aid, input, size) {
   var pid = $(input).parents('.node').attr('id');
   var nid = pid.replace('node-', '');             
   var oid = $(input).val(); 
-  var image = $(input).parents('.content').children('img.uc-option-image');       
+  //var image = $(input).parents('.content').children('img.uc-option-image');       
+  var image = $(input).parents('.node').find('.content img.uc-option-image');       
           
   // Make sure we have permission to switch this attribute
   if (this.attributes[aid] === 0){
@@ -57,7 +58,7 @@ UCOI.switchImage = function(aid, input, size) {
  * Switch the imagepath based on the selected effect.
  */
 UCOI.switchImageEffect = function(image, imagepath) {
-  switch(this.effect){
+  switch(this.effect[1]){
     case 'fade':
       $(image).fadeOut(200, function(){
         $(this).attr('src', imagepath).fadeIn(200);

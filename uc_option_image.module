@@ -30,7 +30,7 @@ function uc_option_image_perm(){
  */
 function uc_option_image_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
   switch ($op) {
-    case 'load':  
+    case 'load':
       // Load option images
       // Keep in mind the file 'filename' is a mash of nid/aid/oid
       $node->option_images = array();
@@ -70,6 +70,7 @@ function uc_option_image_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
             array_unshift($node->attributes, $first_attribute);
             $page_size = variable_get('uc_option_image_page_size', 'preview');  
             $teaser_size = variable_get('uc_option_image_teaser_size', 'thumbnail'); 
+            $preload_images = variable_get('uc_option_image_preload_images', 0); 
             $size = $a4 ? $page_size : $teaser_size;
                    
             // Pass attributes to uc_option_image to populate JS settings
@@ -96,7 +97,7 @@ function uc_option_image_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
             }
             
             // Preload images
-            if ($a4){
+            if ($preload_images){
               $preloaded_images = theme('uc_option_image_preloaded', $node, $size); 
             }
             
@@ -201,6 +202,13 @@ function uc_option_image_form_alter(&$form, &$form_state, $form_id){
             '#default_value' => variable_get('uc_option_image_attributes', ''),
           );
       }
+      $form['uc_option_image']['uc_option_image_preload_images'] = array(
+          '#type' => 'radios',
+          '#title' => t('Preload the images'),
+          '#description' => t('If you want download all images in the moment of loading of the node.'),
+          '#options' => array('1' => t('Enabled'), '0' => t('Disabled')),
+          '#default_value' => variable_get('uc_option_image_preload_images', 0),
+        );
       $form['uc_option_image']['uc_option_image_effect'] = array(
           '#type' => 'select',
           '#title' => t('Switch Effect'),
@@ -381,7 +389,7 @@ function uc_option_image($node, $attributes, $size = '_original') {
       }
     }
   }
-             
+
   // @todo: fix array_merge_recursive() issues...
   @drupal_add_js(array('UCOI' => $data), 'setting');
 }       
@@ -629,8 +637,8 @@ function theme_uc_option_image_preloaded($node, $size = '_original') {
  */
 function theme_uc_option_image_no_image($node, $size = '_original') {
   $attributes = array('class' => 'uc-option-image');
-  $filename = path_to_theme() . '/images/noimage.png';
-  
+  $filename = path_to_theme() . '/no_image.png';
+
   if ($size != '_original'){           
     return theme('imagecache', $size, $filename, t('No Image'), NULL, $attributes);
   }

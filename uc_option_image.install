@@ -8,7 +8,7 @@ function uc_option_image_install($no_image=NULL) {
   if ($info) {
     $file = (object) array(
       'uid' => 1,
-      'filename' => 'option_image_0_0_0';
+      'filename' => 'option_image_0_0_0',
       'filepath' => $no_image,
       'filemime' => $info['file_mime'],
       'filesize' => $info['file_size'],
