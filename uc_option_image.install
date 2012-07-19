@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Uc option image install
+ */ 
 
 function uc_option_image_install($no_image=NULL) {
   if (empty($no_image)) {
