@@ -177,7 +177,7 @@ function uc_option_image_form_alter(&$form, &$form_state, $form_id) {
       // display a message so they can create presets first.
       if (empty($presets)) {
         // Support both locations of imagecache configuration
-        $link = IMAGECACHE_BASE == 1 ? l('admin/settings/imagecache', 'admin/settings/imagecache') : l('admin/build/imagecache', 'admin/build/imagecache');
+        $link = l('admin/build/imagecache', 'admin/build/imagecache');
         drupal_set_message(t('In order to use Option Images you must first create image presets at !link.', array('!link' => $link)));
         break;
       }
@@ -486,17 +486,8 @@ function uc_option_image_get_size_options() {
     return FALSE;
   }
   
-  // imagecache 1.x
-  if (IMAGECACHE_BASE == 1) {
-    foreach ((array) $presets AS $preset) {
-      $options[$preset] = $preset;
-    }
-  }
-  // imagecache 2.x
-  else {
-    foreach ((array) $presets AS $preset) {
-      $options[$preset['presetname']] = $preset['presetname'];
-    }
+  foreach ((array) $presets AS $preset) {
+    $options[$preset['presetname']] = $preset['presetname'];
   }
        
   return $options;
