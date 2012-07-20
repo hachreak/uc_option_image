@@ -172,6 +172,11 @@ function uc_option_image_form_alter(&$form, &$form_state, $form_id) {
       $presets = imagecache_presets();
       $size_options = uc_option_image_get_size_options();
       $attribute_options = uc_option_image_get_attribute_options(); 
+
+      $attribute_options_defaults = $attribute_options;
+      for($i=0; $i<count($attribute_options_defaults); $i++){
+        $attribute_options_defaults[$i] = 0;
+      }
       
       // Ensure we have imagecache presets otherwise
       // display a message so they can create presets first.
@@ -199,7 +204,7 @@ function uc_option_image_form_alter(&$form, &$form_state, $form_id) {
             '#title' => t('Switch Attributes'),
             '#description' => t('Only checked attributes will attempt to be switched when changed. For example you would want to check "Shoe Style" but not "Shoe Size", as "Shoe Size" most likely does not have associated images.'),
             '#options' => $attribute_options,
-            '#default_value' => variable_get('uc_option_image_attributes', ''),
+            '#default_value' => variable_get('uc_option_image_attributes', $attribute_options_defaults),
           );
       }
       $form['uc_option_image']['uc_option_image_preload_images'] = array(
