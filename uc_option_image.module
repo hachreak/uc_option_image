@@ -310,13 +310,15 @@ if (module_exists('imagecache') && !function_exists('imagecache_presets')) {
   }
   
   // Previously undefined in 1.x  
-  function imagecache_create_url($presetname, $path) {
-    $path = _imagecache_strip_file_directory($path);
-    switch (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC)) {
-      case FILE_DOWNLOADS_PUBLIC:
-        return url(file_directory_path() .'/imagecache/'. $presetname . '/' . $path, array('absolute' => TRUE));
-      case FILE_DOWNLOADS_PRIVATE:
-        return url('system/files/imagecache/'. $presetname . '/' . $path, array('absolute' => TRUE));
+  if(!function_exists('imagecache_create_url')){
+    function imagecache_create_url($presetname, $path) {
+      $path = _imagecache_strip_file_directory($path);
+      switch (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC)) {
+        case FILE_DOWNLOADS_PUBLIC:
+          return url(file_directory_path() .'/imagecache/'. $presetname . '/' . $path, array('absolute' => TRUE));
+        case FILE_DOWNLOADS_PRIVATE:
+          return url('system/files/imagecache/'. $presetname . '/' . $path, array('absolute' => TRUE));
+      }
     }
   }
 }
