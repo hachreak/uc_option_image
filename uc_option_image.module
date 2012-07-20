@@ -302,7 +302,7 @@ function uc_option_image_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Support both imagecache 1.6 and 2.0
  */
-if (module_exists('imagecache') && !function_exists('imagecache_presets')) {
+/*if (module_exists('imagecache') && !function_exists('imagecache_presets')) {
   define('IMAGECACHE_BASE', 1);
   // Previously undefined in 1.x
   function imagecache_presets($reset = FALSE) {
@@ -324,7 +324,7 @@ if (module_exists('imagecache') && !function_exists('imagecache_presets')) {
 }
 else {
   define('IMAGECACHE_BASE', 2);
-}
+}*/
 
 /**
  * Add JavaSript and CSS in order to run uc_option_image's switching functionality.
